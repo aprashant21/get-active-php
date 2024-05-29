@@ -1,10 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head></head>
-<body>
+<?php
+include '../includes/header.php';
+?>
 
 <style>
-    body {
+    .loginBody {
         font-family: Arial, sans-serif;
         background-color: #f4f4f4;
         margin: 0;
@@ -23,18 +22,19 @@
         width: 300px;
     }
 
-    h1 {
+    .loginBody h1 {
         text-align: center;
         margin-bottom: 20px;
+        color: #1c1a1a;
     }
 
-    label {
+    .loginBody label {
         display: block;
-        margin-bottom: 5px;
+        color: #1c1a1a;
     }
 
-    input[type="text"],
-    input[type="password"] {
+    .loginBody input[type="text"],
+    .loginBody input[type="password"] {
         width: 100%;
         padding: 10px;
         margin-bottom: 10px;
@@ -42,7 +42,7 @@
         border-radius: 5px;
     }
 
-    input[type="submit"] {
+    .loginBody input[type="submit"] {
         width: 100%;
         padding: 10px;
         background-color: #007bff;
@@ -52,11 +52,11 @@
         cursor: pointer;
     }
 
-    input[type="submit"]:hover {
+    .loginBody input[type="submit"]:hover {
         background-color: #0056b3;
     }
 
-    a {
+    .loginBody a {
         display: block;
         text-align: center;
         margin-top: 10px;
@@ -64,43 +64,50 @@
         color: #007bff;
     }
 
-    a:hover {
+    .loginBody a:hover {
         color: #0056b3;
     }
 
-    .logo-container {
+     .logo-container {
         text-align: center;
         margin-bottom: 20px; /* Adjust the margin as needed */
     }
 
-    .logo{
+     .logo{
         height: 61px;
         width: 100px;
         object-fit: cover;
     }
+
+     .links span {
+         color: #007bff;
+         text-decoration: none;
+     }
 </style>
 
 
+<div class="loginBody">
+    <div id="myForm">
+        <form action='../controllers/loginController.php' method='post'>
+            <h1>Login</h1>
 
+            <div class="logo-container">
+                <img src="../assets/images/logo.png" alt="Logo" class="logo">
+            </div>
 
-<div id="myForm">
-    <form action='usercon.php' method='post'>
-        <h1>Login</h1>
+            <label><b>Username</b></label>
+            <input type="text" placeholder="Enter Username" name="username" required><br>
 
-        <div class="logo-container">
-            <img src="../assets/images/logo.png" alt="Logo" class="logo">
-        </div>
+            <label><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" name="password" required><br>
 
-        <label><b>Username</b></label>
-        <input type="text" placeholder="Enter Username" name="username" required><br>
+            <input type="submit" value="Login"><br>
 
-        <label><b>Password</b></label>
-        <input type="password" placeholder="Enter Password" name="password" required><br>
-
-        <input type="submit" value="Login"><br>
-
-    </form>
+            <div class="links" style="margin-top: 10px; display: flex; justify-content: center; align-items: center;gap: 10px;">
+                <span style="margin-top: 10px;">New Here?</span>   <a href="register.php">Register</a>
+            </div>
+        </form>
+    </div>
 </div>
 
-</body>
-</html>
+

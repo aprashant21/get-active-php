@@ -10,3 +10,4 @@ function require_login() {
         redirect('/pages/login.php');
     }
 }
+

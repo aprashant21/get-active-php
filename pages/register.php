@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-</head>
-<body>
+
 <div class="container">
     <div class="box form-box">
 
@@ -16,12 +8,13 @@
                 width: 100px;
                 object-fit: cover;
             }
-            header {
+            .container header {
                 font-size: 24px;
                 font-weight: bold;
                 text-align: center;
                 margin-bottom: 20px;
             }
+
 
             .form-box {
                 background-color: #fff;
@@ -40,6 +33,13 @@
                 display: block;
                 font-weight: bold;
                 margin-bottom: 5px;
+            }
+
+            .input select {
+                width: 100%;
+                padding: 10px;
+                border-radius: 5px;
+                border: 1px solid #ccc;
             }
 
             .input input {
@@ -100,6 +100,15 @@
                         <label for="email">Email</label>
                         <input type="email" name="email" id="email" autocomplete="off" required>
                     </div>
+
+                    <div class="field input">
+                        <label for="type">User Type</label>
+                        <select name="type" id="type" required>
+                            <option value="user">User</option>
+                            <option value="client">Client</option>
+                        </select>
+                    </div>
+
                     <div class="field input">
                         <label for="password">Password</label>
                         <input type="password" name="password" id="password" autocomplete="off" required>
@@ -114,5 +123,4 @@
                 </form>
             </div>
         </div>
-</body>
-</html>
+

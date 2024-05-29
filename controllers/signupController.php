@@ -6,13 +6,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
     $address = $_POST['address'];
     $email = $_POST['email'];
+    $type = $_POST['type'];
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-    $sql = "INSERT INTO users (username, address, email, password) VALUES (?, ?, ?, ?)";
+    $sql = "INSERT INTO users (username, address, email, type, password) VALUES (?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssss", $username, $address, $email, $password);
+    $stmt->bind_param("sssss", $username, $address, $email, $type, $password);
 
     if ($stmt->execute()) {
+
         // Set success message in session
         $_SESSION['success_message'] = "Registration successful! Please log in.";
 
