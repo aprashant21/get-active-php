@@ -114,8 +114,8 @@ if(isset($_GET['id'])) {
                 <input type="number" id="participants" name="participants" value="<?php echo $tool['participants']; ?>" required>
             </div>
             <div class="input-field">
-                <label for="address">Address</label>
-                <input type="text" id="address" name="address" value="<?php echo $tool['address']; ?>" required>
+                <label for="editAddress">Address</label>
+                <input type="text" id="editAddress" name="editAddress" value="<?php echo $tool['address']; ?>" required>
             </div>
             <button type="submit" class="submit-btn">Update Tool</button>
         </form>
