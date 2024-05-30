@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_type'] = $user['type'];
 
-            if ($user['type'] == 'client') {
+            if ($user['type'] !== 'user') {
                 header("Location: ../pages/dashboard.php");
             } else {
                 header("Location: ../pages/index.php");

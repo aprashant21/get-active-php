@@ -33,7 +33,7 @@ include 'functions.php';
                 <button class="w3-padding-large w3-button" title="More">MORE <i class="fa fa-caret-down"></i></button>
                 <div class="w3-dropdown-content w3-bar-block w3-card-4">
                     <?php if (is_logged_in()): ?>
-                        <?php if ($_SESSION['user_type'] == 'client'): ?>
+                        <?php if ($_SESSION['user_type'] !== 'user'): ?>
                             <a href="../pages/dashboard.php" class="w3-bar-item w3-button">DASHBOARD</a>
                         <?php endif; ?>
                         <a href="../pages/profile.php" class="w3-bar-item w3-button">MY PROFILE</a>
