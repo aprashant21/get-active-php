@@ -36,6 +36,7 @@ include 'functions.php';
                         <?php if ($_SESSION['user_type'] == 'client'): ?>
                             <a href="../pages/dashboard.php" class="w3-bar-item w3-button">DASHBOARD</a>
                         <?php endif; ?>
+                        <a href="../pages/profile.php" class="w3-bar-item w3-button">MY PROFILE</a>
 
                         <a href="../controllers/logoutController.php" class="w3-bar-item w3-button">LOG OUT</a>
                     <?php else: ?>
