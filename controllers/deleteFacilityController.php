@@ -9,11 +9,14 @@ if (isset($_GET['id'])) {
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $facilityId);
 
-    if ($stmt->execute()) {
-        $_SESSION['success_message'] = "Facility deleted successfully!";
-    } else {
-        // Error occurred while deleting the tool
-        $_SESSION['error_message'] = "Error occurred while deleting the facility: " . $conn->error;
+    try {
+        if ($stmt->execute()) {
+            $_SESSION['success_message'] = "Facility deleted successfully!";
+        } else {
+            $_SESSION['error_message'] = "Error occurred while deleting the facility.";
+        }
+    } catch (mysqli_sql_exception $e) {
+        $_SESSION['error_message'] = "Error occurred while deleting the facility: " ;
     }
 
     $stmt->close();

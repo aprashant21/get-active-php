@@ -74,6 +74,14 @@ if(isset($_GET['id'])) {
     $stmt_participants->execute();
     $result_participants = $stmt_participants->get_result();
 
+    // Check if the user has already booked the facility
+    $user_id = $_SESSION['user_id'];
+    $sql_check_booking = "SELECT * FROM bookings WHERE user_id = ? AND facility_id = ?";
+    $stmt_check_booking = $conn->prepare($sql_check_booking);
+    $stmt_check_booking->bind_param("ii", $user_id, $facility_id);
+    $stmt_check_booking->execute();
+    $result_check_booking = $stmt_check_booking->get_result();
+
 } else {
     header("Location: facilities.php");
     exit();
@@ -102,6 +110,12 @@ if(isset($_GET['id'])) {
             </ul>
         <?php else: ?>
             <p>No participants booked for this facility yet.</p>
+        <?php endif; ?>
+
+        <?php if ($result_check_booking->num_rows > 0): ?>
+            <h2 style="color:red; font-weight: bold;">Booked</h2>
+        <?php else: ?>
+            <a href="../controllers/bookingController.php?id=<?php echo $facility['id']; ?>" class="book-btn">Book Facility</a>
         <?php endif; ?>
     </div>
 </div>
