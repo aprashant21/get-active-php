@@ -25,6 +25,8 @@
         <?php if ($_SESSION['user_type'] == 'admin'): ?>
             <a class="w3-bar-item w3-button w3-hover-black" href="../pages/contact-list.php">Contact List</a>
             <a class="w3-bar-item w3-button w3-hover-black" href="../pages/membership_request_list.php">Membership Requests</a>
+            <a class="w3-bar-item w3-button w3-hover-black" href="../pages/matches.php">Matches</a>
+
         <?php endif; ?>
         <?php if ($_SESSION['user_type'] == 'client'): ?>
             <a class="w3-bar-item w3-button w3-hover-black" href="../pages/facilities_list.php">Facilities</a>
