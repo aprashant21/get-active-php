@@ -10,6 +10,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $participants = $_POST['participants'];
     $editAddress = $_POST['editAddress'];
 
+    // Check if the tool was created by the logged-in user
+    $sql_check_creator = "SELECT created_by FROM tools WHERE id = ?";
+    $stmt_check_creator = $conn->prepare($sql_check_creator);
+    $stmt_check_creator->bind_param("i", $tool_id);
+    $stmt_check_creator->execute();
+    $result_check_creator = $stmt_check_creator->get_result();
+
     // Check if a new image file is uploaded
     if ($_FILES['new_image']['name']) {
         // Process the new image file and convert it to base64 format
@@ -27,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $image = $tool['image'];
         } else {
             $_SESSION['error_message'] = "Tool not found.";
-            header("Location: ../pages/tools.php");
+            header("Location: ../pages/facilities_list.php");
             exit();
         }
     }
@@ -41,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($stmt->execute()) {
         $_SESSION['success_message'] = "Tool updated successfully.";
-        header("Location: ../pages/tools.php");
+        header("Location: ../pages/facilities_list.php");
         exit();
     } else {
         // Debugging: Print error message and SQL statement for debugging
@@ -52,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $stmt->close();
 } else {
-    header("Location: ../pages/tools.php");
+    header("Location: ../pages/facilities_list.php");
     exit();
 }
 ?>

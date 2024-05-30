@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $image_base64 = base64_encode($image_data);
     } else {
         $_SESSION['error_message'] = "Image upload failed.";
-        header("Location: ../pages/addTool.php");
+        header("Location: ../pages/add-facilities.php");
         exit();
     }
 
@@ -31,11 +31,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($stmt->execute()) {
         $_SESSION['success_message'] = "Tool added successfully!";
-        header("Location: ../pages/hire-tools.php");
+        header("Location: ../pages/add-facilities.php");
         exit();
     } else {
         $_SESSION['error_message'] = "Error: " . $conn->error;
-        header("Location: ../pages/hire-tools.php");
+        header("Location: ../pages/add-facilities.php");
         exit();
     }
 
@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $conn->close();
 } else {
     // Redirect to the addTool page if accessed directly without a POST request
-    header("Location: ../pages/hire-tools.php");
+    header("Location: ../pages/add-facilities.php");
     exit();
 }
 ?>

@@ -85,7 +85,7 @@
                 </header>
 
                 <header>Sign Up</header>
-                <form action="../controllers/signupController.php" method="post">
+                <form action="../controllers/signupController.php" method="post" onsubmit="return validateForm()">
                     <div class="field input">
                         <label for="username">Username</label>
                         <input type="text" name="username" id="username" autocomplete="off" required>
@@ -124,3 +124,29 @@
             </div>
         </div>
 
+
+        <script>
+            function validateForm() {
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                const address = document.getElementById('address').value;
+
+                const usernameRegex = /^[a-zA-Z0-9]+$/;
+                if (!usernameRegex.test(username)) {
+                    alert('Username must be alphanumeric.');
+                    return false;
+                }
+
+                if (password.length < 8) {
+                    alert('Password must be at least 8 characters long.');
+                    return false;
+                }
+
+                if (address.length > 150) {
+                    alert('Address must be less than or equal to 150 characters.');
+                    return false;
+                }
+
+                return true;
+            }
+        </script>

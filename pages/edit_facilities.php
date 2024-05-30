@@ -61,23 +61,25 @@
 <?php
 include "../includes/sidebar.php";
 
-// Check if the tool ID is provided in the URL
 if(isset($_GET['id'])) {
     $tool_id = $_GET['id'];
 
-    // Retrieve tool details from the database using the tool ID
     $sql = "SELECT * FROM tools WHERE id = $tool_id";
     $result = $conn->query($sql);
 
     if($result->num_rows > 0) {
         $tool = $result->fetch_assoc();
+
+        if($tool['created_by'] != $_SESSION['user_id']){
+            $_SESSION['error_message'] = "You don't have permission to edit this tool!";
+            exit();
+        }
+
     } else {
-        // Redirect if tool with the given ID is not found
         header("Location: tools_list.php");
         exit();
     }
 } else {
-    // Redirect if tool ID is not provided in the URL
     header("Location: tools_list.php");
     exit();
 }
@@ -87,10 +89,10 @@ if(isset($_GET['id'])) {
 <div class="container-tool">
     <div class="form-box">
         <h2>Edit Tool</h2>
-        <form action="../controllers/editToolController.php" method="post" enctype="multipart/form-data">
+        <form action="../controllers/editFacilityController.php" method="post" enctype="multipart/form-data">
             <input type="hidden" name="tool_id" value="<?php echo $tool['id']; ?>">
             <div class="input-field">
-                <label for="title">Tool Title</label>
+                <label for="title">Facility Title</label>
                 <input type="text" id="title" name="title" value="<?php echo $tool['title']; ?>" required>
             </div>
             <div class="input-field">

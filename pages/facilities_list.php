@@ -1,8 +1,10 @@
 <?php
 include "../includes/sidebar.php";
 
+
+$userId = $_SESSION['user_id'];
 // Retrieve data from the tools table
-$sql = "SELECT * FROM tools";
+$sql = "SELECT * FROM tools where created_by = $userId";
 $result = $conn->query($sql);
 
 ?>
@@ -68,7 +70,7 @@ $result = $conn->query($sql);
 <div class="w3-main" style="margin-left:250px">
 
     <div class="container">
-        <h2>Tools List</h2>
+        <h2>Facilities List</h2>
         <table>
             <thead>
             <tr>
@@ -99,7 +101,7 @@ $result = $conn->query($sql);
                     echo "</tr>";
                 }
             } else {
-                echo "<tr><td colspan='7'>No tools found</td></tr>";
+                echo "<tr><td colspan='7'>No Facilities found</td></tr>";
             }
             ?>
             </tbody>
@@ -111,11 +113,11 @@ $result = $conn->query($sql);
     function confirmDelete(toolId) {
         if (confirm("Are you sure you want to delete this tool?")) {
             // If the user clicks "OK" in the confirmation dialog, proceed with the deletion
-            window.location.href = "../controllers/deleteToolController.php?id=" + toolId;
+            window.location.href = "../controllers/deleteFacilityController.php?id=" + toolId;
         }
     }
 
     function goToEdit(toolId) {
-        window.location.href = "../pages/edit-tools.php?id=" + toolId;
+        window.location.href = "../pages/edit_facilities.php?id=" + toolId;
     }
 </script>

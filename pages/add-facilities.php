@@ -1,5 +1,6 @@
 <?php include "../includes/sidebar.php" ?>
 
+<?php if ($_SESSION['user_type'] == 'client'): ?>
 <style>
     .container-tool {
         display: flex;
@@ -62,10 +63,10 @@
 
 <div class="container-tool">
     <div class="form-box">
-        <h2>Add Tool</h2>
-        <form action="../controllers/toolsController.php" method="post" enctype="multipart/form-data">
+        <h2>Add Facilities</h2>
+        <form action="../controllers/facilitiesController.php" method="post" enctype="multipart/form-data">
             <div class="input-field">
-                <label for="title">Tool Title</label>
+                <label for="title">Facility Title</label>
                 <input type="text" id="title" name="title" required>
             </div>
             <div class="input-field">
@@ -92,3 +93,17 @@
         </form>
     </div>
 </div>
+    <script>
+        // Get the current date and time
+        var now = new Date();
+        var year = now.getFullYear();
+        var month = (now.getMonth() + 1).toString().padStart(2, '0');
+        var day = now.getDate().toString().padStart(2, '0');
+        var hours = now.getHours().toString().padStart(2, '0');
+        var minutes = now.getMinutes().toString().padStart(2, '0');
+
+        // Set the minimum value for the datetime-local input
+        var minDatetime = year + '-' + month + '-' + day + 'T' + hours + ':' + minutes;
+        document.getElementById('date_time').min = minDatetime;
+    </script>
+<?php endif ?>

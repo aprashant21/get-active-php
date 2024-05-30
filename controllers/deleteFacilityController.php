@@ -21,6 +21,6 @@ if (isset($_GET['id'])) {
     $_SESSION['error_message'] = "Tool ID is not provided.";
 }
 
-header("Location: ../pages/tools.php");
+header("Location: ../pages/facilities_list.php");
 exit();
 ?>
