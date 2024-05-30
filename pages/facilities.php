@@ -186,6 +186,10 @@
         background-color: #0056b3;
     }
 
+    .hide{
+        display:none;
+    }
+
     /* Media Queries */
     @media (max-width: 768px) {
         .facilities-list {
@@ -234,23 +238,11 @@ $result = $stmt->get_result();
     </header>
 
     <div class="search-filter">
-        <input type="text" placeholder="Search by facility name or location...">
-        <div class="filters">
-            <select>
-                <option value="">All Sports</option>
-                <option value="tennis">Tennis</option>
-                <option value="basketball">Basketball</option>
-                <option value="swimming">Swimming</option>
-            </select>
-            <select>
-                <option value="">Any Distance</option>
-                <option value="5">Within 5 miles</option>
-                <option value="10">Within 10 miles</option>
-            </select>
-        </div>
+        <input type="text" id="searchInput" placeholder="Search by facility name or location...">
     </div>
 
-    <div class="facilities-list">
+
+    <div class="facilities-list" id="facilitiesList">
         <?php if ($result->num_rows > 0): ?>
             <?php while($row = $result->fetch_assoc()): ?>
                 <div class="facility">
@@ -287,6 +279,34 @@ $result = $stmt->get_result();
 
 
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Add event listener to search input
+        document.getElementById('searchInput').addEventListener('input', filterFacilities);
+    });
+
+    function filterFacilities() {
+        const searchQuery = document.getElementById('searchInput').value.toLowerCase();
+        const facilities = document.querySelectorAll('.facility');
+
+        facilities.forEach(function (facility) {
+            const title = facility.querySelector('h2').textContent.toLowerCase();
+            const description = facility.querySelector('p').textContent.toLowerCase();
+            const address = facility.querySelectorAll('p')[1].textContent.toLowerCase();
+
+            const isTitleMatch = title.includes(searchQuery);
+            const isDescriptionMatch = description.includes(searchQuery);
+            const isAddressMatch = address.includes(searchQuery);
+
+            if (isTitleMatch || isDescriptionMatch || isAddressMatch) {
+                facility.classList.remove('hide');
+            } else {
+                facility.classList.add('hide');
+            }
+        });
+    }
+</script>
 
 
 <?php include "../includes/footer.php" ?>
