@@ -220,7 +220,7 @@
 
 $currentDateTime = date('Y-m-d H:i:s');
 
-$sql = "SELECT * FROM tools WHERE date_time >= ?";
+$sql = "SELECT * FROM facility WHERE date_time >= ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $currentDateTime);
 $stmt->execute();

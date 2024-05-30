@@ -3,22 +3,22 @@ session_start();
 include "../includes/db.php";
 
 if (isset($_GET['id'])) {
-    $toolId = $_GET['id'];
+    $facilityId = $_GET['id'];
 
-    $sql = "DELETE FROM tools WHERE id = ?";
+    $sql = "DELETE FROM facility WHERE id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $toolId);
+    $stmt->bind_param("i", $facilityId);
 
     if ($stmt->execute()) {
-        $_SESSION['success_message'] = "Tool deleted successfully!";
+        $_SESSION['success_message'] = "Facility deleted successfully!";
     } else {
         // Error occurred while deleting the tool
-        $_SESSION['error_message'] = "Error occurred while deleting the tool: " . $conn->error;
+        $_SESSION['error_message'] = "Error occurred while deleting the facility: " . $conn->error;
     }
 
     $stmt->close();
 } else {
-    $_SESSION['error_message'] = "Tool ID is not provided.";
+    $_SESSION['error_message'] = "Facility ID is not provided.";
 }
 
 header("Location: ../pages/facilities_list.php");

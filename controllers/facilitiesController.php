@@ -8,6 +8,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $date_time = $_POST['date_time'];
     $participants = $_POST['participants'];
     $address = $_POST['address'];
+    $category = $_POST['category'];
+    $distance = $_POST['distance'];
 
     // Convert the image to a Base64 string
     $image_base64 = '';
@@ -24,13 +26,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Get the user ID from the session
     $created_by = $_SESSION['user_id'];
 
-    // Insert the tool into the database
-    $sql = "INSERT INTO tools (title, description, date_time, participants, address, created_by, image) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    // Insert the facility into the database
+    $sql = "INSERT INTO facility (title, description, date_time, participants, address, created_by, image, category, distance) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssisss", $title, $description, $date_time, $participants, $address, $created_by, $image_base64);
+    $stmt->bind_param("sssissssi", $title, $description, $date_time, $participants, $address, $created_by, $image_base64, $category, $distance);
 
     if ($stmt->execute()) {
-        $_SESSION['success_message'] = "Tool added successfully!";
+        $_SESSION['success_message'] = "Facility added successfully!";
         header("Location: ../pages/add-facilities.php");
         exit();
     } else {
@@ -43,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->close();
     $conn->close();
 } else {
-    // Redirect to the addTool page if accessed directly without a POST request
+    // Redirect to the add facility page if accessed directly without a POST request
     header("Location: ../pages/add-facilities.php");
     exit();
 }

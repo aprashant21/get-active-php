@@ -4,7 +4,7 @@ include "../includes/sidebar.php";
 
 $userId = $_SESSION['user_id'];
 // Retrieve data from the tools table
-$sql = "SELECT * FROM tools where created_by = $userId";
+$sql = "SELECT * FROM facility where created_by = $userId";
 $result = $conn->query($sql);
 
 ?>

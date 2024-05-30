@@ -1,4 +1,3 @@
-
 <style>
     .container-tool {
         display: flex;
@@ -62,42 +61,41 @@
 include "../includes/sidebar.php";
 
 if(isset($_GET['id'])) {
-    $tool_id = $_GET['id'];
+    $facility_id = $_GET['id'];
 
-    $sql = "SELECT * FROM tools WHERE id = $tool_id";
+    $sql = "SELECT * FROM facility WHERE id = $facility_id";
     $result = $conn->query($sql);
 
     if($result->num_rows > 0) {
-        $tool = $result->fetch_assoc();
+        $facility = $result->fetch_assoc();
 
-        if($tool['created_by'] != $_SESSION['user_id']){
-            $_SESSION['error_message'] = "You don't have permission to edit this tool!";
+        if($facility['created_by'] != $_SESSION['user_id']){
+            $_SESSION['error_message'] = "You don't have permission to edit this facility!";
             exit();
         }
 
     } else {
-        header("Location: tools_list.php");
+        header("Location: facilities_list.php");
         exit();
     }
 } else {
-    header("Location: tools_list.php");
+    header("Location: facilities_list.php");
     exit();
 }
 ?>
 
-
 <div class="container-tool">
     <div class="form-box">
-        <h2>Edit Tool</h2>
+        <h2>Edit Facility</h2>
         <form action="../controllers/editFacilityController.php" method="post" enctype="multipart/form-data">
-            <input type="hidden" name="tool_id" value="<?php echo $tool['id']; ?>">
+            <input type="hidden" name="facility_id" value="<?php echo $facility['id']; ?>">
             <div class="input-field">
                 <label for="title">Facility Title</label>
-                <input type="text" id="title" name="title" value="<?php echo $tool['title']; ?>" required>
+                <input type="text" id="title" name="title" value="<?php echo $facility['title']; ?>" required>
             </div>
             <div class="input-field">
                 <label for="image">Current Image</label>
-                <img src="data:image/jpeg;base64,<?php echo $tool['image']; ?>" alt="Tool Image" style="max-width: 200px; object-fit: cover;">
+                <img src="data:image/jpeg;base64,<?php echo $facility['image']; ?>" alt="Facility Image" style="max-width: 200px; object-fit: cover;">
             </div>
             <div class="input-field">
                 <label for="new_image">New Image</label>
@@ -105,21 +103,39 @@ if(isset($_GET['id'])) {
             </div>
             <div class="input-field">
                 <label for="description">Description</label>
-                <textarea id="description" name="description" rows="4" required><?php echo $tool['description']; ?></textarea>
+                <textarea id="description" name="description" rows="4" required><?php echo $facility['description']; ?></textarea>
             </div>
             <div class="input-field">
                 <label for="date_time">Date and Time</label>
-                <input type="datetime-local" id="date_time" name="date_time" value="<?php echo date('Y-m-d\TH:i', strtotime($tool['date_time'])); ?>" required>
+                <input type="datetime-local" id="date_time" name="date_time" value="<?php echo date('Y-m-d\TH:i', strtotime($facility['date_time'])); ?>" required>
             </div>
             <div class="input-field">
                 <label for="participants">Total Number of Participants Allowed</label>
-                <input type="number" id="participants" name="participants" value="<?php echo $tool['participants']; ?>" required>
+                <input type="number" id="participants" name="participants" value="<?php echo $facility['participants']; ?>" required>
             </div>
             <div class="input-field">
                 <label for="editAddress">Address</label>
-                <input type="text" id="editAddress" name="editAddress" value="<?php echo $tool['address']; ?>" required>
+                <input type="text" id="editAddress" name="editAddress" value="<?php echo $facility['address']; ?>" required>
             </div>
-            <button type="submit" class="submit-btn">Update Tool</button>
+            <div class="input-field">
+                <label for="category">Category</label>
+                <select id="category" name="category" required>
+                    <option value="tennis" <?php echo ($facility['category'] == 'tennis') ? 'selected' : ''; ?>>Tennis</option>
+                    <option value="basketball" <?php echo ($facility['category'] == 'basketball') ? 'selected' : ''; ?>>Basketball</option>
+                    <option value="swimming" <?php echo ($facility['category'] == 'swimming') ? 'selected' : ''; ?>>Swimming</option>
+                    <option value="football" <?php echo ($facility['category'] == 'football') ? 'selected' : ''; ?>>Football</option>
+                    <option value="gym" <?php echo ($facility['category'] == 'gym') ? 'selected' : ''; ?>>Gym</option>
+                    <option value="badminton" <?php echo ($facility['category'] == 'badminton') ? 'selected' : ''; ?>>Badminton</option>
+                </select>
+            </div>
+            <div class="input-field">
+                <label for="distance">Distance</label>
+                <select id="distance" name="distance" required>
+                    <option value="5" <?php echo ($facility['distance'] == '5') ? 'selected' : ''; ?>>Within 5 miles</option>
+                    <option value="10" <?php echo ($facility['distance'] == '10') ? 'selected' : ''; ?>>Within 10 miles</option>
+                </select>
+            </div>
+            <button type="submit" class="submit-btn">Update Facility</button>
         </form>
     </div>
 </div>

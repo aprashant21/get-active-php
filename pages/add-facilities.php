@@ -2,7 +2,7 @@
 
 <?php if ($_SESSION['user_type'] == 'client'): ?>
 <style>
-    .container-tool {
+    .container-facility {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -61,7 +61,7 @@
 </style>
 
 
-<div class="container-tool">
+<div class="container-facility">
     <div class="form-box">
         <h2>Add Facilities</h2>
         <form action="../controllers/facilitiesController.php" method="post" enctype="multipart/form-data">
@@ -89,21 +89,39 @@
                 <label for="address">Address</label>
                 <input type="text" id="address" name="address" required>
             </div>
-            <button type="submit" class="submit-btn">Add Tool</button>
+            <div class="input-field">
+                <label for="category">Category</label>
+                <select id="category" name="category" required>
+                    <option value="tennis">Tennis</option>
+                    <option value="basketball">Basketball</option>
+                    <option value="swimming">Swimming</option>
+                    <option value="football">Football</option>
+                    <option value="gym">Gym</option>
+                    <option value="badminton">Badminton</option>
+                </select>
+            </div>
+            <div class="input-field">
+                <label for="distance">Distance</label>
+                <select id="distance" name="distance" required>
+                    <option value="5">Within 5 miles</option>
+                    <option value="10">Within 10 miles</option>
+                </select>
+            </div>
+            <button type="submit" class="submit-btn">Add Facility</button>
         </form>
     </div>
 </div>
-    <script>
-        // Get the current date and time
-        var now = new Date();
-        var year = now.getFullYear();
-        var month = (now.getMonth() + 1).toString().padStart(2, '0');
-        var day = now.getDate().toString().padStart(2, '0');
-        var hours = now.getHours().toString().padStart(2, '0');
-        var minutes = now.getMinutes().toString().padStart(2, '0');
+<script>
+    // Get the current date and time
+    var now = new Date();
+    var year = now.getFullYear();
+    var month = (now.getMonth() + 1).toString().padStart(2, '0');
+    var day = now.getDate().toString().padStart(2, '0');
+    var hours = now.getHours().toString().padStart(2, '0');
+    var minutes = now.getMinutes().toString().padStart(2, '0');
 
-        // Set the minimum value for the datetime-local input
-        var minDatetime = year + '-' + month + '-' + day + 'T' + hours + ':' + minutes;
-        document.getElementById('date_time').min = minDatetime;
-    </script>
+    // Set the minimum value for the datetime-local input
+    var minDatetime = year + '-' + month + '-' + day + 'T' + hours + ':' + minutes;
+    document.getElementById('date_time').min = minDatetime;
+</script>
 <?php endif ?>
