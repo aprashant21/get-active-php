@@ -1,4 +1,4 @@
-<?php include "../includes/header.php" ?>
+<?php include "../includes/header.php"; ?>
 
 <style>
     .profile-container {
@@ -67,8 +67,15 @@
             $result = $stmt->get_result();
 
             if ($result->num_rows > 0) {
-                // User has already requested membership, disable the button
-                echo '<button type="button" class="request-membership-btn" disabled>Requested</button>';
+                $membership_request = $result->fetch_assoc();
+                $status = $membership_request['status'];
+                if ($status == 'approved') {
+                    echo '<button type="button" class="request-membership-btn" disabled style="background: #4CAF50">Approved</button>';
+                } elseif ($status == 'rejected') {
+                    echo '<button type="button" class="request-membership-btn" disabled style="background: red;">Rejected</button>';
+                } else {
+                    echo '<button type="button" class="request-membership-btn" disabled>Requested</button>';
+                }
             } else {
                 // User has not requested membership, display the button
                 echo '<form action="../controllers/requestMembershipController.php" method="post">';
@@ -83,4 +90,4 @@
     </div>
 </div>
 
-<?php include "../includes/footer.php" ?>
+<?php include "../includes/footer.php"; ?>

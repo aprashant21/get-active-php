@@ -23,20 +23,19 @@
         <a class="w3-bar-item w3-button w3-hover-black" href="../pages/dashboard.php">Dashboard</a>
 
         <?php if ($_SESSION['user_type'] == 'admin'): ?>
+            <a class="w3-bar-item w3-button w3-hover-black" href="../pages/contact-list.php">Contact List</a>
             <a class="w3-bar-item w3-button w3-hover-black" href="../pages/membership_request_list.php">Membership Requests</a>
         <?php endif; ?>
         <?php if ($_SESSION['user_type'] == 'client'): ?>
             <a class="w3-bar-item w3-button w3-hover-black" href="../pages/facilities_list.php">Facilities</a>
             <a class="w3-bar-item w3-button w3-hover-black" href="../pages/add-facilities.php">Add Facilities</a>
-            <a class="w3-bar-item w3-button w3-hover-black" href="#">View booked Facilities</a>
+            <a class="w3-bar-item w3-button w3-hover-black" href="../pages/booked-facilities.php">View booked Facilities</a>
         <?php endif; ?>
         <a class="w3-bar-item w3-button w3-hover-black" href="../controllers/logoutController.php">Log out</a>
     </nav>
 
-    <!-- Overlay effect when opening sidebar on small screens -->
     <div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 
-    <!-- Main content: shift it to the right by 250 pixels when the sidebar is visible -->
     <div class="w3-main" style="margin-left:250px">
 
     </div>

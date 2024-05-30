@@ -220,7 +220,7 @@
 
 $currentDateTime = date('Y-m-d H:i:s');
 
-$sql = "SELECT * FROM facility WHERE date_time >= ?";
+$sql = "SELECT * FROM facility WHERE date_time >= ? AND participants > 0";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $currentDateTime);
 $stmt->execute();

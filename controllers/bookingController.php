@@ -19,26 +19,47 @@ if (isset($_GET['id'])) {
         $_SESSION['error_message'] = "You must become a member to book a facility. Go to your profile and become a member.";
         header("Location: ../pages/profile.php");
         exit();
+    } else {
+        // User is a member, proceed with booking the facility
+        // Check if the facility has more than 0 participants
+        $sql_check_participants = "SELECT participants FROM facility WHERE id = ?";
+        $stmt_check_participants = $conn->prepare($sql_check_participants);
+        $stmt_check_participants->bind_param("i", $facility_id);
+        $stmt_check_participants->execute();
+        $result_check_participants = $stmt_check_participants->get_result();
+        $facility = $result_check_participants->fetch_assoc();
+
+        if ($facility['participants'] <= 0) {
+            $_SESSION['error_message'] = "This facility cannot be booked as it has 0 participants.";
+            header("Location: ../pages/facility-details.php?id=$facility_id");
+            exit();
+        }
+
+        // Construct the INSERT statement to insert the booking into the bookings table
+        $sql_insert_booking = "INSERT INTO bookings (user_id, facility_id) VALUES (?, ?)";
+        $stmt_insert_booking = $conn->prepare($sql_insert_booking);
+        $stmt_insert_booking->bind_param("ii", $user_id, $facility_id);
+
+        // Execute the INSERT statement
+        if ($stmt_insert_booking->execute()) {
+            // Update participants count in the facility table
+            $sql_update_participants = "UPDATE facility SET participants = participants - 1 WHERE id = ?";
+            $stmt_update_participants = $conn->prepare($sql_update_participants);
+            $stmt_update_participants->bind_param("i", $facility_id);
+            $stmt_update_participants->execute();
+
+            // Booking and participants update successful
+            $_SESSION['success_message'] = "Facility booked successfully.";
+            header("Location: ../pages/facility-details.php?id=$facility_id");
+            exit();
+        } else {
+            // Error occurred while inserting the booking
+            $_SESSION['error_message'] = "Error booking facility: " . $stmt_insert_booking->error;
+            header("Location: ../pages/facility-details.php?id=$facility_id");
+            exit();
+        }
     }
 
-    // Check if the user has already booked the facility
-    $sql_check_booking = "SELECT * FROM bookings WHERE user_id = ? AND facility_id = ?";
-    $stmt_check_booking = $conn->prepare($sql_check_booking);
-    $stmt_check_booking->bind_param("ii", $user_id, $facility_id);
-    $stmt_check_booking->execute();
-    $result_check_booking = $stmt_check_booking->get_result();
-
-    // If the user has already booked the facility, display "Booked" text
-    if ($result_check_booking->num_rows > 0) {
-        echo "<p>Booked</p>";
-        exit(); // Exit to prevent further execution
-    }
-
-    // If the user is a member and has not booked the facility, display the book button
-    echo '<form action="../controllers/bookingController.php" method="post">';
-    echo '<input type="hidden" name="facility_id" value="' . $facility_id . '">';
-    echo '<button type="submit" class="book-btn">Book Facility</button>';
-    echo '</form>';
 } else {
     header("Location: facilities.php");
     exit();

@@ -59,9 +59,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $_SESSION['error_message'] = "Invalid request method.";
 }
 
-// Close prepared statements and database connection
-$update_stmt->close();
-$user_id_stmt->close();
-$update_user_stmt->close();
-$conn->close();
+header("Location: ../pages/membership_request_list.php");
+exit();
 ?>
