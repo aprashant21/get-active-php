@@ -267,8 +267,8 @@ $result = $stmt->get_result();
 
     <div style="margin-top: 50px;">
         <?php if (!is_logged_in()): ?>
-            <div class="call-to-action">
-                <p>Ready to join a match? <a href="signup.html">Sign up now!</a></p>
+            <div class="call-to-action" style="margin-top: 10px;padding-top: 10px;">
+                <p>Ready to join a match? <a href="register.php">Sign up now!</a></p>
             </div>
         <?php endif;?>
 
