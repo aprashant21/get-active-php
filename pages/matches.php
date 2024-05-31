@@ -1,6 +1,5 @@
 <?php include "../includes/sidebar.php"; ?>
 
-
 <style>
     .container {
         max-width: 800px;
@@ -69,25 +68,20 @@ if ($_SESSION['user_type'] != 'admin') {
     exit();
 }
 
-// Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Get selected month and year from the form
     $selectedYear = $_POST['year'];
 
-    // Fetch facilities based on the selected month and year
-    if (!empty($selectedMonth) && !empty($selectedYear)) {
-        $sql = "SELECT * FROM facility WHERE MONTH(date_time) = ? AND YEAR(date_time) = ?";
+    if (!empty($selectedYear)) {
+        $sql = "SELECT * FROM facility WHERE YEAR(date_time) = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ii", $selectedMonth, $selectedYear);
+        $stmt->bind_param("i", $selectedYear);
         $stmt->execute();
         $result = $stmt->get_result();
     } else {
-        // Fetch all facilities if month and year are not provided
         $sql = "SELECT * FROM facility";
         $result = $conn->query($sql);
     }
 } else {
-    // Fetch all facilities by default if form is not submitted
     $sql = "SELECT * FROM facility";
     $result = $conn->query($sql);
 }
@@ -97,7 +91,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="container">
         <h1>Matches</h1>
 
-        <form action="" method="post">
+        <form action="../controllers/generateReportController.php" method="post">
             <div style="display: flex;justify-content: flex-end; gap:10px;">
                 <div>
                     <label for="year">Select Year:</label>
@@ -111,14 +105,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         ?>
                     </select>
                 </div>
-                <input type="hidden" name="selected_year" id="selected_year">
-                <button type="submit" class="report-button" onclick="setSelectedYear()">Generate Report</button>
+                <button type="submit" class="report-button">Generate Report</button>
             </div>
         </form>
 
-
-
-        <!-- Matches table -->
         <table>
             <thead>
             <tr>
@@ -132,7 +122,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <?php
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
-                    // Populate the table rows with facility data
                     echo "<tr>";
                     echo "<td>" . $row['date_time'] . "</td>";
                     echo "<td>" . $row['title'] . "</td>";
@@ -141,21 +130,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     echo "</tr>";
                 }
             } else {
-                // No facilities found
-                echo "<tr><td colspan='4'>No facilities found for the selected month and year.</td></tr>";
+                echo "<tr><td colspan='4'>No facilities found for the selected year.</td></tr>";
             }
             ?>
             </tbody>
         </table>
 
     </div>
-
-    <script>
-        function setSelectedYear() {
-            var selectedYear = document.getElementById("year").value;
-            // Set the value of the hidden input field to the selected year
-            document.getElementById("selected_year").value = selectedYear;
-        }
-    </script>
-
 </div>
+
+<script>
+    function setSelectedYear() {
+        var selectedYear = document.getElementById("year").value;
+        document.getElementById("selected_year").value = selectedYear;
+    }
+</script>

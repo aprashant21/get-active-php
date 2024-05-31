@@ -1,6 +1,10 @@
 <?php
 session_start();
 include "../includes/db.php";
+require '../vendor/autoload.php';
+
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 if ($_SESSION['user_type'] != 'admin') {
     $_SESSION['error_message'] = "Access denied. You must be an admin to view this page.";
@@ -8,8 +12,9 @@ if ($_SESSION['user_type'] != 'admin') {
     exit();
 }
 
-if(isset($_POST['selected_year'])) {
-    $selectedYear = $_POST['selected_year'];
+if(isset($_POST['year'])) {
+    $selectedYear = $_POST['year'];
+
 
     $sql = "SELECT * FROM facility WHERE YEAR(date_time) = ?";
     $stmt = $conn->prepare($sql);
@@ -17,12 +22,10 @@ if(isset($_POST['selected_year'])) {
     $stmt->execute();
     $result = $stmt->get_result();
 
-    // Initialize PHPExcel
-    require_once '../libraries/PHPExcel/Classes/PHPExcel.php';
-    $objPHPExcel = new PHPExcel();
+    $spreadsheet = new Spreadsheet();
+    $sheet = $spreadsheet->getActiveSheet();
 
-    // Set properties
-    $objPHPExcel->getProperties()->setCreator("Your Name")
+    $spreadsheet->getProperties()->setCreator("Your Name")
         ->setLastModifiedBy("Your Name")
         ->setTitle("Facility Report")
         ->setSubject("Facility Report")
@@ -30,29 +33,26 @@ if(isset($_POST['selected_year'])) {
         ->setKeywords("facility report")
         ->setCategory("Report");
 
-    // Add data to the Excel sheet
-    $objPHPExcel->setActiveSheetIndex(0);
-    $objPHPExcel->getActiveSheet()->setCellValue('A1', 'Date & Time');
-    $objPHPExcel->getActiveSheet()->setCellValue('B1', 'Title');
-    $objPHPExcel->getActiveSheet()->setCellValue('C1', 'Address');
-    $objPHPExcel->getActiveSheet()->setCellValue('D1', 'Participants');
+    $sheet->setCellValue('A1', 'Date & Time');
+    $sheet->setCellValue('B1', 'Title');
+    $sheet->setCellValue('C1', 'Address');
+    $sheet->setCellValue('D1', 'Participants');
 
-    $rowNumber = 2; // Start from row 2 to avoid overwriting headers
+    $rowNumber = 2;
     while ($row = $result->fetch_assoc()) {
-        $objPHPExcel->getActiveSheet()->setCellValue('A'.$rowNumber, $row['date_time']);
-        $objPHPExcel->getActiveSheet()->setCellValue('B'.$rowNumber, $row['title']);
-        $objPHPExcel->getActiveSheet()->setCellValue('C'.$rowNumber, $row['address']);
-        $objPHPExcel->getActiveSheet()->setCellValue('D'.$rowNumber, $row['participants']);
+        $sheet->setCellValue('A'.$rowNumber, $row['date_time']);
+        $sheet->setCellValue('B'.$rowNumber, $row['title']);
+        $sheet->setCellValue('C'.$rowNumber, $row['address']);
+        $sheet->setCellValue('D'.$rowNumber, $row['participants']);
         $rowNumber++;
     }
 
-    // Redirect output to a client’s web browser (Excel2007)
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     header('Content-Disposition: attachment;filename="facility_report_'.$selectedYear.'.xlsx"');
     header('Cache-Control: max-age=0');
 
-    $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-    $objWriter->save('php://output');
+    $writer = new Xlsx($spreadsheet);
+    $writer->save('php://output');
     exit();
 } else {
     $_SESSION['error_message'] = "Year parameter is not provided.";
