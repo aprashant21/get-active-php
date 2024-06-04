@@ -111,8 +111,7 @@ $result = $conn->query($sql);
 
 <script>
     function confirmDelete(toolId) {
-        if (confirm("Are you sure you want to delete this tool?")) {
-            // If the user clicks "OK" in the confirmation dialog, proceed with the deletion
+        if (confirm("Are you sure you want to delete this facility?")) {
             window.location.href = "../controllers/deleteFacilityController.php?id=" + toolId;
         }
     }

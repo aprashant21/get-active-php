@@ -84,7 +84,7 @@
             echo '<td>' . htmlspecialchars($row['facility_title']) . '</td>';
             echo '<td class="action-buttons">';
             echo '<a href="edit-event.php?id=' . htmlspecialchars($row['id']) . '" class="edit-button">Edit</a>';
-            echo '<a href="delete-event.php?id=' . htmlspecialchars($row['id']) . '" class="delete-button" onclick="return confirm(\'Are you sure you want to delete this event?\')">Delete</a>';
+            echo '<a href="javascript:void(0);" class="delete-button" onclick="confirmDelete(' . htmlspecialchars($row['id']) . ')">Delete</a>';
             echo '</td>';
             echo '</tr>';
         }
@@ -98,5 +98,13 @@
     $conn->close();
     ?>
 </div>
+
+<script>
+    function confirmDelete(eventId) {
+        if (confirm("Are you sure you want to delete this event?")) {
+            window.location.href = "../controllers/deleteEventController.php?id=" + eventId;
+        }
+    }
+</script>
 
 <?php include "../includes/footer.php" ?>

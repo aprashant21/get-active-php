@@ -143,7 +143,7 @@
                 </table>
             </div>
         <?php else: ?>
-            <p class="no-bookings-message">You have not booked any facilities yet.</p>
+            <p class="no-bookings-message">You don't have any booked facilities yet.</p>
         <?php endif; ?>
 
         <?php
