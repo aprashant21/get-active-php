@@ -9,6 +9,7 @@ if(isset($_GET['id'])) {
 
     if($result->num_rows > 0) {
         $event = $result->fetch_assoc();
+        $event_datetime = date('Y-m-d\TH:i', strtotime($event['event_date']));
 
         if($event['created_by'] != $_SESSION['user_id']){
             $_SESSION['error_message'] = "You don't have permission to edit this event!";
@@ -41,7 +42,7 @@ if(isset($_GET['id'])) {
         </div>
         <div class="w3-section">
             <label for="event_date">Date and Time</label>
-            <input type="datetime-local" class="w3-input w3-border" id="event_date" name="event_date" value="<?php echo date('Y-m-d\TH:i', strtotime($event['event_date'])); ?>" required>
+            <input type="datetime-local" class="w3-input w3-border" id="event_date" name="event_date" value="<?php echo $event_datetime; ?>" min="<?php echo $event_datetime; ?>" required>
         </div>
         <div class="w3-section">
             <label for="location">Location</label>
@@ -83,5 +84,7 @@ if(isset($_GET['id'])) {
         </div>
     </form>
 </div>
+
+
 
 <?php include "../includes/footer.php" ?>

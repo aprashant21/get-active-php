@@ -27,7 +27,7 @@ include 'functions.php';
         <div class="w3-bar w3-card" style="background: linear-gradient(to left, #ffa500, #6fa407);">
             <a href="index.php" class="w3-bar-item w3-button w3-padding-large">HOME</a>
             <a href="../pages/facilities.php" class="w3-bar-item w3-button w3-padding-large w3-hide-small">FACILITIES</a>
-<!--            <a href="/maps" class="w3-bar-item w3-button w3-padding-large w3-hide-small">MAPS</a>-->
+            <a href="../pages/events.php" class="w3-bar-item w3-button w3-padding-large w3-hide-small">EVENTS</a>
             <a href="../pages/contact.php" class="w3-bar-item w3-button w3-padding-large w3-hide-small">CONTACT</a>
             <div class="w3-dropdown-hover w3-hide-small">
                 <button class="w3-padding-large w3-button" title="More">MORE <i class="fa fa-caret-down"></i></button>
