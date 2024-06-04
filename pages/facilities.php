@@ -1,7 +1,6 @@
 <?php include "../includes/header.php" ?>
 
 <style>
-    /* General Styles */
 
     .facilities-page{
         margin-top: 100px;
@@ -222,11 +221,8 @@
 
 <?php
 
-$currentDateTime = date('Y-m-d H:i:s');
-
-$sql = "SELECT * FROM facility WHERE date_time >= ? AND participants > 0";
+$sql = "SELECT * FROM facility";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("s", $currentDateTime);
 $stmt->execute();
 $result = $stmt->get_result();
 ?>
@@ -250,8 +246,6 @@ $result = $stmt->get_result();
                     <div class="facility-info">
                         <h2><?php echo $row['title']; ?></h2>
                         <p><?php echo $row['description']; ?></p>
-                        <p>Location: <?php echo $row['address']; ?></p>
-                        <p>Date & Time: <?php echo $row['date_time']; ?></p>
                         <a href="facility-details.php?id=<?php echo $row['id']; ?>" class="view-details">View Details</a>
                     </div>
                 </div>

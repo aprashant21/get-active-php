@@ -106,18 +106,6 @@ if(isset($_GET['id'])) {
                 <textarea id="description" name="description" rows="4" required><?php echo $facility['description']; ?></textarea>
             </div>
             <div class="input-field">
-                <label for="date_time">Date and Time</label>
-                <input type="datetime-local" id="date_time" name="date_time" value="<?php echo date('Y-m-d\TH:i', strtotime($facility['date_time'])); ?>" required>
-            </div>
-            <div class="input-field">
-                <label for="participants">Total Number of Participants Allowed</label>
-                <input type="number" id="participants" name="participants" value="<?php echo $facility['participants']; ?>" required>
-            </div>
-            <div class="input-field">
-                <label for="editAddress">Address</label>
-                <input type="text" id="editAddress" name="editAddress" value="<?php echo $facility['address']; ?>" required>
-            </div>
-            <div class="input-field">
                 <label for="category">Category</label>
                 <select id="category" name="category" required>
                     <option value="tennis" <?php echo ($facility['category'] == 'tennis') ? 'selected' : ''; ?>>Tennis</option>

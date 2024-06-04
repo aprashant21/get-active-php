@@ -6,9 +6,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $facility_id = $_POST['facility_id'];
     $title = $_POST['title'];
     $description = $_POST['description'];
-    $date_time = $_POST['date_time'];
-    $participants = $_POST['participants'];
-    $editAddress = $_POST['editAddress'];
     $category = $_POST['category'];
     $distance = $_POST['distance'];
 
@@ -45,13 +42,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 
-    // Default address if not provided
-    $editAddress = $editAddress ?: 'NO ADDRESS';
-
     // Update facility in the database
-    $sql = "UPDATE facility SET title=?, description=?, date_time=?, address=?, participants=?, category=?, distance=?, image=? WHERE id=?";
+    $sql = "UPDATE facility SET title=?, description=?, category=?, distance=?, image=? WHERE id=?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssissisi", $title, $description, $date_time, $editAddress, $participants, $category, $distance, $image, $facility_id);
+    $stmt->bind_param("sssisi", $title, $description, $category, $distance, $image, $facility_id);
 
     if ($stmt->execute()) {
         $_SESSION['success_message'] = "Facility updated successfully.";

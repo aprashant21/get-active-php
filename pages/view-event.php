@@ -109,11 +109,15 @@
                     <p><strong>Location:</strong> <?php echo htmlspecialchars($row['location']); ?></p>
                     <p><strong>Time:</strong> <?php echo htmlspecialchars($row['event_date']); ?></p>
                 </div>
+            <?php if (is_logged_in()): ?>
+
                 <?php if ($isBooked): ?>
                     <span class="booked-btn">Booked</span>
                 <?php else: ?>
                     <a href="../controllers/bookingController.php?event_id=<?php echo $eventId; ?>" class="book-event-btn">Book Event</a>
                 <?php endif; ?>
+                <?php endif; ?>
+
             </div>
             <?php
         } else {

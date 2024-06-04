@@ -1,4 +1,5 @@
 <?php include "../includes/sidebar.php" ?>
+<?php if ($_SESSION['user_type'] == 'client'): ?>
 
 <div class="w3-content container" style="margin-top: 100px; max-width: 800px;">
 
@@ -55,3 +56,4 @@
 
 
 <?php include "../includes/footer.php" ?>
+<?php endif ?>

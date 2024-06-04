@@ -54,6 +54,8 @@ include "../includes/sidebar.php";
 
 </style>
 
+<?php if ($_SESSION['user_type'] == 'client'): ?>
+
 <div class="w3-content container">
     <h2 class="w3-center">Booked Events</h2>
     <?php
@@ -95,3 +97,4 @@ include "../includes/sidebar.php";
     $conn->close();
     ?>
 </div>
+<?php endif ?>

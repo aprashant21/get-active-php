@@ -156,7 +156,10 @@
                 echo "<p>Date: " . htmlspecialchars($row['event_date']) . "</p>";
                 echo "<p>Description: " . htmlspecialchars($row['event_description']) . "</p>";
                 echo "</div>";
-                echo "<a href='view-event.php?id=" . htmlspecialchars($row['id']) . "' class='view-event-btn'>View Event</a>";
+                if (is_logged_in()):
+                    echo "<a href='view-event.php?id=" . htmlspecialchars($row['id']) . "' class='view-event-btn'>View Event</a>";
+                endif;
+
                 echo "</div>";
             }
         } else {

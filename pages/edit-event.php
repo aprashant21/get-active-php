@@ -25,6 +25,7 @@ if(isset($_GET['id'])) {
     exit();
 }
 ?>
+<?php if ($_SESSION['user_type'] == 'client'): ?>
 
 <div class="w3-content container" style="margin-top: 100px; max-width: 800px;">
 
@@ -84,6 +85,7 @@ if(isset($_GET['id'])) {
         </div>
     </form>
 </div>
+<?php endif ?>
 
 
 

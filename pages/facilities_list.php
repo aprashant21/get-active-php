@@ -77,9 +77,6 @@ $result = $conn->query($sql);
                 <th>ID</th>
                 <th>Title</th>
                 <th>Description</th>
-                <th>Date and Time</th>
-                <th>Participants</th>
-                <th>Address</th>
                 <th>Action</th>
             </tr>
             </thead>
@@ -91,9 +88,6 @@ $result = $conn->query($sql);
                     echo "<td>" . $row["id"] . "</td>";
                     echo "<td>" . $row["title"] . "</td>";
                     echo "<td>" . $row["description"] . "</td>";
-                    echo "<td>" . $row["date_time"] . "</td>";
-                    echo "<td>" . $row["participants"] . "</td>";
-                    echo "<td>" . $row["address"] . "</td>";
                     echo "<td class='action-buttons'>";
                     echo "<button class='edit' onclick='goToEdit(" . $row["id"] . ")'>Edit</button>";
                     echo "<button class='delete' onclick='confirmDelete(" . $row["id"] . ")'>Delete</button>";
