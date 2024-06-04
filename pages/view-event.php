@@ -8,19 +8,27 @@
         margin-bottom: 20px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         background-color: #fff;
+        transition: box-shadow 0.3s ease;
+    }
+
+    .event-card:hover {
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     }
 
     .event-card h2 {
         margin-top: 0;
-        margin-bottom: 10px;
-        font-size: 2em;
+        margin-bottom: 15px;
+        font-size: 2.2em;
         font-weight: bold;
-        color: #1f1e1e;
+        color: #333;
     }
 
     .event-card p {
         margin: 0;
-        color: #1f1e1e;
+        margin-bottom: 10px;
+        font-size: 1.1em;
+        line-height: 1.6;
+        color: #555;
     }
 
     .event-card img {
@@ -28,7 +36,7 @@
         height: 400px;
         max-height: 400px;
         border-radius: 8px;
-        margin-bottom: 10px;
+        margin-bottom: 20px;
         object-fit: cover;
     }
 
@@ -36,28 +44,49 @@
         margin-top: 20px;
     }
 
+    .event-details p {
+        margin-bottom: 10px;
+        color: #666;
+    }
+
     .book-event-btn {
-        display: block;
+        display: inline-block;
         margin-top: 20px;
-        padding: 10px 20px;
+        padding: 12px 25px;
         background-color: #4CAF50;
         color: #fff;
         text-decoration: none;
         border-radius: 5px;
-        transition: background-color 0.3s ease;
+        font-size: 1em;
+        transition: background-color 0.3s ease, transform 0.3s ease;
         text-align: center;
     }
 
     .book-event-btn:hover {
         background-color: #45a049;
+        transform: scale(1.05);
+    }
+
+    .booked-btn {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 12px 25px;
+        background-color: #d3d3d3;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 1em;
+        text-align: center;
+        cursor: not-allowed;
     }
 </style>
 
 <div class="w3-content container" style="margin-top:100px;">
     <?php
-    // Check if the event ID is provided in the URL
     if (isset($_GET['id'])) {
         $eventId = $_GET['id'];
+
+        $userId = $_SESSION['user_id'];
 
         // Query to retrieve the event details
         $sql = "SELECT * FROM client_events WHERE id = $eventId";
@@ -65,22 +94,34 @@
 
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
+
+            // Query to check if the event is already booked by the user
+            $checkBookingSql = "SELECT * FROM bookings WHERE user_id = $userId AND event_id = $eventId";
+            $bookingResult = $conn->query($checkBookingSql);
+            $isBooked = $bookingResult->num_rows > 0;
             ?>
             <div class="event-card">
-                <h2><?php echo $row['event_name']; ?></h2>
-                <img src="data:image/jpeg;base64,<?php echo $row['image']; ?>" alt="Event Image">
+                <h2><?php echo htmlspecialchars($row['event_name']); ?></h2>
+                <img src="data:image/jpeg;base64,<?php echo htmlspecialchars($row['image']); ?>" alt="Event Image">
                 <div class="event-details">
-                    <p>Date: <?php echo $row['event_date']; ?></p>
-                    <p>Description: <?php echo $row['event_description']; ?></p>
-                    <p>Location: <?php echo $row['location']; ?></p>
-                    <p>Time: <?php echo $row['event_date']; ?></p>
+                    <p><strong>Date:</strong> <?php echo htmlspecialchars($row['event_date']); ?></p>
+                    <p><strong>Description:</strong> <?php echo nl2br(htmlspecialchars($row['event_description'])); ?></p>
+                    <p><strong>Location:</strong> <?php echo htmlspecialchars($row['location']); ?></p>
+                    <p><strong>Time:</strong> <?php echo htmlspecialchars($row['event_date']); ?></p>
                 </div>
-                <a href="#" class="book-event-btn">Book Event</a>
+                <?php if ($isBooked): ?>
+                    <span class="booked-btn">Booked</span>
+                <?php else: ?>
+                    <a href="../controllers/bookingController.php?event_id=<?php echo $eventId; ?>" class="book-event-btn">Book Event</a>
+                <?php endif; ?>
             </div>
             <?php
         } else {
             echo "<p>Event not found.</p>";
         }
+
+        // Close the database connection
+        $conn->close();
     } else {
         echo "<p>No event ID provided.</p>";
     }

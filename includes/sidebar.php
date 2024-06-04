@@ -55,7 +55,6 @@
             <div class="dropdown-container">
                 <a class="w3-bar-item w3-button w3-hover-black" href="../pages/facilities_list.php">View Facilities</a>
                 <a class="w3-bar-item w3-button w3-hover-black" href="../pages/add-facilities.php">Add Facilities</a>
-                <a class="w3-bar-item w3-button w3-hover-black" href="../pages/booked-facilities.php">View Booked Facilities</a>
             </div>
 
             <!-- Events Dropdown -->

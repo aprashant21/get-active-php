@@ -16,7 +16,7 @@ if ($_SESSION['user_type'] == 'client' || $_SESSION['user_type'] == 'admin') {
     $sql_bookings_count = "
         SELECT COUNT(*) as total_bookings 
         FROM bookings b
-        JOIN facility f ON b.facility_id = f.id
+        JOIN facility f ON b.event_id = f.id
         WHERE f.created_by = ?";
     $stmt_bookings_count = $conn->prepare($sql_bookings_count);
     $stmt_bookings_count->bind_param("i", $user_id);
