@@ -1,4 +1,3 @@
-
 <?php include "../includes/header.php"; ?>
 
 <style>
@@ -62,6 +61,7 @@
     .event-card h3 {
         margin-top: 0;
         margin-bottom: 10px;
+        color: black;
     }
 
     .event-card p {
@@ -134,7 +134,6 @@ $result_events = $stmt_events->get_result();
         <img src="data:image/jpeg;base64,<?php echo $facility['image']; ?>" alt="Facility Image">
         <h2>Description</h2>
         <p><?php echo $facility['description']; ?></p>
-
     </div>
 
     <div class="events-list">
@@ -152,10 +151,9 @@ $result_events = $stmt_events->get_result();
                     <p><strong>Date:</strong> <?php echo htmlspecialchars($event['event_date']); ?></p>
                     <p><strong>Description:</strong> <?php echo nl2br(htmlspecialchars($event['event_description'])); ?></p>
                     <p><strong>Location:</strong> <?php echo htmlspecialchars($event['location']); ?></p>
-                <?php if (is_logged_in()): ?>
-                    <a href='view-event.php?id=<?php $event['id']; ?>' class="book-btn">View Event</a>
-                <?php endif; ?>
-
+                    <?php if (is_logged_in()): ?>
+                        <a href='view-event.php?id=<?php echo $event['id']; ?>' class="book-btn">View Event</a>
+                    <?php endif; ?>
                 </div>
                 <?php
             }
@@ -165,6 +163,3 @@ $result_events = $stmt_events->get_result();
         ?>
     </div>
 </div>
-
-
-<?php include "../includes/footer.php"; ?>

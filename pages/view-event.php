@@ -88,14 +88,12 @@
 
         $userId = $_SESSION['user_id'];
 
-        // Query to retrieve the event details
         $sql = "SELECT * FROM client_events WHERE id = $eventId";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
 
-            // Query to check if the event is already booked by the user
             $checkBookingSql = "SELECT * FROM bookings WHERE user_id = $userId AND event_id = $eventId";
             $bookingResult = $conn->query($checkBookingSql);
             $isBooked = $bookingResult->num_rows > 0;
@@ -124,7 +122,6 @@
             echo "<p>Event not found.</p>";
         }
 
-        // Close the database connection
         $conn->close();
     } else {
         echo "<p>No event ID provided.</p>";
